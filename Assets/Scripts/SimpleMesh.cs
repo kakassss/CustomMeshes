@@ -11,19 +11,33 @@ public class SimpleMesh : MonoBehaviour
     {
         var mesh = new Mesh
         {
-            name = "My Mesh"
+            name = "My Mesh",
+            vertices = new Vector3[]
+            {
+                Vector3.zero, 
+                Vector3.right, 
+                Vector3.up, 
+                
+                // Vector3.right, 
+                // Vector3.up, 
+                new Vector3(1,1), 
+            },
+            triangles = new int[]
+            {
+                0,2,1,
+                2,3,1
+            },
+            normals = new Vector3[]
+            {
+                Vector3.back,
+                Vector3.back, 
+                Vector3.back,
+                Vector3.back,
+               
+            },
+            
         };
 
-        mesh.vertices = new Vector3[]
-        {
-            Vector3.zero, Vector3.right *5 , Vector3.up
-        };
-
-        mesh.triangles = new int[]
-        {
-            0,2,1
-        };
-        
         GetComponent<MeshFilter>().mesh = mesh;
     }
 }
