@@ -12,7 +12,7 @@ public class SimpleMesh : MonoBehaviour
         var mesh = new Mesh
         {
             name = "My Mesh",
-            vertices = new Vector3[]
+            vertices = new[]
             {
                 Vector3.zero, 
                 Vector3.right, 
