@@ -4,7 +4,7 @@ public class CustomMeshes : MonoBehaviour
 {
     private void OnEnable()
     {
-        Hexagon();
+        Triangle();
     }
 
     private void Triangle()
@@ -16,6 +16,7 @@ public class CustomMeshes : MonoBehaviour
         Vector3[] vertices = new Vector3[3];
         Vector3[] normals = new Vector3[3];
         int[] triangles = new int[3];
+        Vector2[] uv = new Vector2[3];
         
         vertices[0] = Vector3.zero;
         vertices[1] = Vector3.right;
@@ -29,9 +30,14 @@ public class CustomMeshes : MonoBehaviour
         normals[1] = Vector3.back;
         normals[2] = Vector3.back;
         
+        uv[0] = Vector2.zero;
+        uv[1] = Vector2.right;
+        uv[2] = Vector2.up;
+        
         mesh.vertices = vertices;
         mesh.normals = normals;
         mesh.triangles = triangles;
+        mesh.uv = uv;
         
         GetComponent<MeshFilter>().mesh = mesh;
     }
