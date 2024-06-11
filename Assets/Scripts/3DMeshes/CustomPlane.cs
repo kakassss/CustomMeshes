@@ -6,56 +6,67 @@ namespace _3DMeshes
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class CustomPlane : MonoBehaviour
     {
-        [SerializeField] private int _width;
-        [SerializeField] private int _height;
+        [SerializeField] private int _planeSize;
+        
+        private int _width;
+        private int _height;
         
         private void OnEnable()
         {
-            Quad();
+            Plane();
         }
-
-        private void Quad()
+        
+        private void Plane()
         {
             Mesh mesh = new Mesh();
 
-            mesh.name = "Custom Quad";
+            mesh.name = "Custom Plane";
 
-            Vector3[] vertices = new Vector3[8];
-            Vector3[] normals = new Vector3[8];
-            int[] triangles = new int[_width * 3];
-            
-            vertices[0] = Vector3.zero;
-            vertices[1] = Vector3.up;
-            vertices[2] = Vector3.right;
-            vertices[3] = new Vector3(1, 1);
-            vertices[4] = new Vector3(2, 0);
-            vertices[5] = new Vector3(2, 1);
-            vertices[6] = new Vector3(3, 0);
-            vertices[7] = new Vector3(3, 1);
-            
+            _width = _planeSize;
+            _height = _planeSize;
 
+            float verticleCount = Mathf.Pow(_width + 1, 2);
+            
+            Vector3[] vertices = new Vector3[Mathf.FloorToInt(verticleCount)];
+            Vector3[] normals = new Vector3[Mathf.FloorToInt(verticleCount)];
+            int[] triangles = new int[_width * _height * 6];
+
+            int verticesIndex = 0;
+            for (int i = 0; i < _width + 1; i++)
+            {
+                for (int j = 0; j < _height + 1; j++)
+                {
+                    vertices[verticesIndex] = new Vector3( j , i);
+                    verticesIndex++;
+                }
+            }
+
+            int triangleIndex = 0;
+            int vertIndex = 0;
+
+            for (int i = 0; i < _width; i++)
+            {
+                for (int j = 0; j < _height; j++)
+                {
+                    triangles[triangleIndex] = vertIndex;
+                    triangles[triangleIndex + 1] = vertIndex + _height + 1;
+                    triangles[triangleIndex + 2] = vertIndex + 1;
+                    
+                    triangles[triangleIndex + 3] = vertIndex + _height + 1;
+                    triangles[triangleIndex + 4] = vertIndex + _height + 2;
+                    triangles[triangleIndex + 5] = vertIndex + 1;
+
+                    vertIndex++;
+                    triangleIndex += 6;
+                }
+                vertIndex++;
+            }
+
+            
             for (int i = 0; i < normals.Length; i++)
             {
                 normals[i] = Vector3.back;
             }
-            
-            for (int i = 0; i < _width; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    triangles[3*i] = i;
-                    triangles[3*i + 1] = i + 1;
-                    triangles[3*i + 2] = i + 2;
-                }
-
-                if (i % 2 == 1)
-                {
-                    triangles[3*i] = i;
-                    triangles[3*i + 1] = i + 2;
-                    triangles[3*i + 2] = i + 1;
-                }
-            }
-            
             
             mesh.vertices = vertices;
             mesh.normals = normals;
