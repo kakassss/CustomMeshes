@@ -11,7 +11,7 @@ public class CustomMeshes : MonoBehaviour
     {
         Mesh mesh = new Mesh();
 
-        mesh.name = "Custom Quad";
+        mesh.name = "Custom Triangle";
 
         Vector3[] vertices = new Vector3[3];
         Vector3[] normals = new Vector3[3];
